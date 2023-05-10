@@ -5,21 +5,37 @@ function Cards_component() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
+      //constante com fetch para buscar dados da api
+      const resultJson = await fetch(
         'https://compras.dados.gov.br/comprasContratos/v1/contratos.json?fornecedor_cnpj_cpf_idgener=12.294.708/0001-81'
       )
-      const jsonData = await response.json()
-      console.log(jsonData) // log dos dados recebidos
-      console.log(jsonData._embedded) // log dos dados reais relacionados ao contrato
-      setData(
-        jsonData._embedded.contratos.map(item => ({
-          id: item.id,
-          unidade_nome_resumido: item.unidade_nome_resumido,
-          categoria: item.categoria,
-          objeto: item.objeto,
-          valor_inicial: item.valor_inicial
-        }))
+      //guardando o resultado obtido nessa constante
+      const resultContrato = await resultJson.json()
+
+      console.log(resultContrato) // log dos dados recebidos
+      console.log(resultContrato._embedded) // log dos dados reais relacionados ao contrato
+
+      let resultFormatado = resultContrato._embedded.contratos.map(
+        ({ id, unidade_nome_resumido, categoria, objeto, valor_inicial }) => ({
+          id: id,
+          unidade_nome_resumido: unidade_nome_resumido,
+          categoria: categoria,
+          objeto: objeto,
+          valor_inicial: valor_inicial
+        })
       )
+
+      // setData(
+      //   resultContrato._embedded.contratos.map(item => ({
+      //     id: item.id,
+      //     unidade_nome_resumido: item.unidade_nome_resumido,
+      //     categoria: item.categoria,
+      //     objeto: item.objeto,
+      //     valor_inicial: item.valor_inicial
+      //   }))
+      // )
+
+      setData(resultFormatado)
     }
     fetchData()
   }, [])
