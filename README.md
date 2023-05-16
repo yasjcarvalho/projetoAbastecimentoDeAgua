@@ -33,38 +33,80 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 **Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# Roteiro
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. CRIAR PROJETO - npx create-react-app
+2. Criar componentes
+3. Passar parametros via props
+4. Passar funçoes como parametros
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+5. Hook - React useState
+    5.0 Usar chatgpt para pesquisar OU QUALQUER FONTE A SEU CRITÉRIO(* incluindo zap e vozes da sua cabeça)
+    5.1 Criar variável em cada componente usando useState
+        ```
+            const [contagem, setContagem] = useState(0);
+        ```
+    5.2 Exibir a variável no return:
+        ```
+            <label>{contagem}</label>
+        ```
+    5.3 Na funçâo que trata o click do adicionar, incrementar a variável contagem com:
+        * Criar funçâo handleAddFavorito(produto)
+        ```
+            setContagem(contagem++);
+        ```
+6. Hook - React useEffect * 
 
-## Learn More
+    Usando a api:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    https://dummyjson.com/docs/products
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    ------Primeira parte-----
 
-### Code Splitting
+    6.1 Criar um useEffect dentro do seu compomente que faz um fecth para a api acima, listando a sua categoria. Por exemplo, 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+    https://dummyjson.com/products/category/womens-shoes
 
-### Analyzing the Bundle Size
+    * Caso não tenha a sua categoria, utilize uma categoria próxima a seu critério. Ou ainda, busque uma caso julgue necessário.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+    6.2 Realize um map para transformar o resultado no formato adequado. Assim como é feito na classe PAI(Marketplace).
 
-### Making a Progressive Web App
+    6.3 Coloque o resultado dos produtos numa variável e exiba na lista abaixo da lista anterior;
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+    ------ Segunda parte ------
+    
+    6.1 Criar um SELECT com as opções de ordenação de produto, mais estoque, menor preço, maior preço, mais bem avaliados
 
-### Advanced Configuration
+    6.2 Na alteração do select, alterar o valor de uma variável controlado por useState;
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+    6.3 Criar um useEffect que escuta essa variável, e faz uma reordenação do array, e o atualiza usando seu set do useState;
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+7. Rotas - React-Router
+  
+  https://www.freecodecamp.org/news/how-to-use-react-router-version-6/
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  1. Instalar react-router-dom v6
+    ```
+      npm install react-router-dom 
+    ```
+  2. Config index.js
+    ```
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    ```
+  3. Criar componentes que serão páginas únicas
+    FilmesHome
+    JogosHome
+  
+  4. Definir rotas no App.js
+    ```
+      <Routes>
+        <Route path="/" element={<Marketplace/>}></Route>
+        <Route path="jogos" element={<JogosHomeComponent/>}></Route>
+        <Route path="filmes" element={<FilmesHomeComponent/>}></Route>
+      </Routes>
+    ```
+  5. Adicionar Link nos componentes para levar a outras páginas
+    <Link to="filmes">Clique para ir a página de filmes</Link>
